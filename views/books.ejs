@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+     <title>ReadMe</title>
+     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+     <style>
+     body         {background-color: #20201C; }
+     </style>
+</head>
+<body>
+     <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+               <div class="navbar-header">
+                    <a  class="navbar-brand" href='/'>Readme</a>
+               </div>
+               <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                         <li><a href='/books'>Books</a></li>
+                    </ul>
+               </div>
+          </div>
+     </nav>
+
+     <div class="container jumbotron">
+          <div class="well">
+               <form class="form-inline" name="from1" method="POST" action="/searchBooks">
+                    <div class="form-group">
+                         <input name='name' class="input form-control" type="text" placeholder="Book Name">
+                    </div>
+                    <button class="btn btn-primary">Search</button>
+                    <a role="button" class="btn btn-default pull-right" href='/logout'>Logout</a>
+               </form>
+          </div>
+          <% if (books) { %>
+               <div>
+                         <div class="row">
+                              <% for(var i=0; i < books.length; i++) { %>
+                                   <% if (books[i].volumeInfo.imageLinks) { %>
+                                        <div class="col-sm-6 col-lg-4">
+                                             <div class="thumbnail" style="min-width: 350px; min-height:458px;">
+                                                  <img src="<%= books[i].volumeInfo.imageLinks.thumbnail %>" alt="..." class="img-responsive" style="width: 128px; height:192px;">
+                                                  <div class="caption">
+                                                       <p><strong><%= books[i].volumeInfo.title %></strong></p>
+                                                       <% if (books[i].volumeInfo.publisher) { %>
+                                                       <p>Publisher: <%= books[i].volumeInfo.publisher %> </p>
+                                                        <% } else if (books[i].volumeInfo.authors) { %>
+                                                             <p>Auther: <%= books[i].volumeInfo.authors[0] %> </p>
+                                                             <% } %>
+                                                       <p><a href="/preview?id=<%=i%>" class="btn btn-primary" role="button">Details</a></p>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                        <% } %>
+                              <% } %>
+                         </div>
+                         <div>
+                              <a href='/previousPage' role="button" class="btn btn-primary">Previous</a>
+                              <span><%= page %></span>
+                              <a href='/nextPage' role="button" class="btn btn-primary">Next</a>
+                         </div>
+                    </div>
+
+               </div>
+               <% } %>
+               </body>
+               </html>
